@@ -6,6 +6,7 @@ typedef long long ll;
 #define loopr(i, end, start) for(int i=end; i>=start; --i)
 #define MOD 1e9+7
 #define pb push_back
+#define mp make_pair
 using namespace std;
 
 template <typename T>
