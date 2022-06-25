@@ -2,8 +2,6 @@
 typedef long long ll;
 #define IOS ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 #define endl "\n"
-#define ff first
-#define ss second
 #define loop(i, start, end) for(int i=start; i<=end; ++i)
 #define loopr(i, end, start) for(int i=end; i>=start; --i)
 #define MOD 1e9+7
@@ -29,7 +27,7 @@ void ruffleSort(int *a, int n) {
 int main()
 {
     IOS;
-    
+
     // cerr << "execution time: " << (1.0*clock())/CLOCKS_PER_SEC << "s" << endl;
     return 0;
 }
