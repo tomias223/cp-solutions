@@ -27,7 +27,7 @@ void ruffleSort(int *a, int n) {
 
 int main()
 {
-    IOS;
+    IOS
 
     // cerr << "execution time: " << (1.0*clock())/CLOCKS_PER_SEC << "s" << endl;
     return 0;
