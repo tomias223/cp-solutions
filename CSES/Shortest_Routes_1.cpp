@@ -1,4 +1,4 @@
-// dfs problem
+// shortest path -- dijkstra's algorithm
 
 #include <bits/stdc++.h>
 typedef long long ll;
@@ -8,6 +8,7 @@ typedef long long ll;
 #define loopr(i, end, start) for(int i=end; i>=start; --i)
 #define MOD 1e9+7
 #define pb push_back
+#define mp make_pair
 using namespace std;
 
 template <typename T>
@@ -27,43 +28,40 @@ void ruffleSort(int *a, int n) {
 }
 
 int n, m;
-bool* visited;
-void dfs(vector<int> adj[], int s) {
-    if (visited[s]) return;
-    visited[s]=true;
-    // cout << s << ' ';
-    for (auto u: adj[s]) {
-        dfs(adj, u);
-    }
-}
+const ll INF=LLONG_MAX;
 
 int main()
 {
     IOS;
     cin >> n >> m;
-    vector<int> adj[n+1];
-    visited=new bool[n+1];
-    int a, b;
-    int ans=0;
-    loop(i, 0, m-1) {
-        cin >> a >> b;
-        adj[a].pb(b);
-        adj[b].pb(a);
-    }
-    vector<int> c;
+    vector<pair<ll, ll>> adj[n+1];
+    ll a, b, w;
     loop(i, 1, n) {
-        if(!visited[i]) {
-            dfs(adj, i);
-            ++ans;
-            c.pb(i);
-            cout << endl;
+        cin >> a >> b >> w;
+        adj[a].pb(mp(b, w));
+    }
+    bool visited[n+1]={};
+    ll distance[n+1];
+    distance[1]=0;
+    loop(i, 2, n) distance[i]=INF;
+    priority_queue<pair<ll, ll>> q; // pair of distance from start node (in negative) and current node
+    q.push(mp(0, 1));
+    while(!q.empty()) {
+        int a=q.top().second, b, w;
+        q.pop();
+        if(visited[a]) continue;
+        visited[a]=true;
+        for(auto u: adj[a]) {
+            b=u.first;
+            w=u.second;
+            if(distance[b] > distance[a]+w) {
+                distance[b]=distance[a]+w;
+                q.push(mp((-1)*distance[b], b));
+            }
         }
     }
-    cout << ans-1 << endl;
-    for(auto it=c.begin(); it!=(c.end()-1); ++it) {
-        cout << *it << ' ' << *(it+1) << endl;
-    }
-    delete[] visited;
+    printArray(distance, 1, n);
+    cout << endl;
     // cerr << "execution time: " << (1.0*clock())/CLOCKS_PER_SEC << "s" << endl;
     return 0;
 }
