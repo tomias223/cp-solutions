@@ -3,3 +3,11 @@
 
 #ignore output files
 *.out
+
+#ignore image files
+*.png
+*.jpg
+*.jpeg
+
+#ignore demo files
+CSES/demo.cpp
