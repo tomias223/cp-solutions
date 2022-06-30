@@ -1,16 +1,12 @@
-// shortest path -- bellman-ford (TLE)
-
 #include <bits/stdc++.h>
 typedef long long ll;
 #define IOS ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 #define endl "\n"
-#define ff first
-#define ss second
 #define loop(i, start, end) for(int i=start; i<=end; ++i)
 #define loopr(i, end, start) for(int i=end; i>=start; --i)
 #define MOD 1e9+7
 #define pb push_back
-#define INF 1000000000
+#define mp make_pair
 using namespace std;
 
 template <typename T>
@@ -29,29 +25,32 @@ void ruffleSort(int *a, int n) {
     sort(a, a+n);
 }
 
-int n, m;
-
 int main()
 {
-    IOS;
-    vector<tuple<int, int, int>> edges;
-    cin >> n >> m;
-    int a, b, w;
-    loop(i, 1, m) {
-        cin >> a >> b >> w;
-        edges.pb({a, b, w});
-    }
-    int distance[n+1];
-    distance[1]=0;
-    loop(i, 2, n) distance[i]=INF;
-    loop(i, 1, n-1) {
-        for(auto e: edges) {
-            tie(a, b, w)=e;
-            distance[b]=min(distance[b], distance[a]+w);
+    IOS
+    int t;
+    cin >> t;
+    int n, m, k, x, y, Max, ans;
+    while(t--) {
+        Max=INT_MIN;
+        x=0; y=0;
+        cin >> n >> m;
+        int a[n][m];
+        loop(i, 0, n-1) {
+            loop(j, 0, m-1) {
+                cin >> k;
+                if(k>Max) {
+                    Max=k;
+                    x=i;
+                    y=j;
+                }
+            }
         }
+        int p=max(x, n-1-x); ++p;
+        int q=max(y, m-1-y); ++q;
+        // cout << x << ' ' << y << ' ' << Max << endl;
+        cout << p*q << endl;
     }
-    loop(i, 1, n) cout << distance[i] << ' ';
-    cout << endl;
     // cerr << "execution time: " << (1.0*clock())/CLOCKS_PER_SEC << "s" << endl;
     return 0;
 }

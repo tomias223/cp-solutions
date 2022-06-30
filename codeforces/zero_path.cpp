@@ -7,7 +7,6 @@ typedef long long ll;
 #define MOD 1e9+7
 #define pb push_back
 #define mp make_pair
-#define INF 1e18+1e17+1e16+1e15+1e14
 using namespace std;
 
 template <typename T>
@@ -26,39 +25,39 @@ void ruffleSort(int *a, int n) {
     sort(a, a+n);
 }
 
+const int N=1005;
+
 int n, m;
-vector<vector<pair<int, int>>> adj;
+int a[N][N], mn[N][N], mx[N][N];
+bool pos;
 
 int main()
 {
     IOS
-    cin >> n >> m;
-    adj.resize(n+1);
-    int a, b, w;
-    loop(i, 1, m) {
-        cin >> a >> b >> w;
-        adj[a].pb(mp(b, w));
-    }
-    bool visited[n+1]={};
-    ll distance[n+1]={};
-    distance[1]=0;
-    loop(i, 2, n) distance[i]=INF;
-    priority_queue<pair<int, int>> q;
-    q.push(mp(0, 1));
-    while(!q.empty()) {
-        int a=q.top().second;
-        q.pop();
-        if(visited[a]) continue;
-        visited[a]=true;
-        for(auto u: adj[a]) {
-            int b=u.first, w=u.second;
-            if(distance[a]+w < distance[b]) {
-                distance[b]=distance[a]+w;
-                q.push(mp(distance[b]*(-1), b));
+    int t;
+    cin >> t;
+    while(t--) {
+        cin >> n >> m;
+        loop(i, 1, n) {
+            loop(j, 1, m) cin >> a[i][j];
+        }
+        if((n+m)%2==0) {
+            cout << "NO" << endl;
+            continue;
+        }
+        mn[1][1]=mx[1][1]=a[1][1];
+        loop(i, 1, n) mx[i][1]=mn[i][1]=mx[i-1][1]+a[i][1];
+        loop(j, 1, m) mx[1][j]=mn[1][j]=mx[1][j-1]+a[1][j];
+        loop(i, 1, n) {
+            loop(j, 1, m) {
+                mx[i][j]=max(mx[i-1][j], mx[i][j-1])+a[i][j];
+                mn[i][j]=min(mn[i-1][j], mn[i][j-1])+a[i][j];
             }
         }
+        if(mx[n][m]>=0 && mn[n][m]<=0) cout << "YES";
+        else cout << "NO";
+        cout << endl;
     }
-    printArray(distance, 1, n);
     // cerr << "execution time: " << (1.0*clock())/CLOCKS_PER_SEC << "s" << endl;
     return 0;
 }
